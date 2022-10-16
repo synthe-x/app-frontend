@@ -31,7 +31,7 @@ function App() {
 
 	useEffect(() => {
 		// getUserData();
-		setMinCRatio(1.3);
+		setMinCRatio(130);
 	}, []);
 
 	function getUserData(_address: string | null = address) {
@@ -63,21 +63,21 @@ function App() {
 							bg={colorMode == 'dark' ? '#171717' : '#FFFFFF'}
 							borderRadius={'10px'}>
 							<Box w="70%">
-								<Text w="7rem" h="0.3rem" bg="#36a2eb"></Text>
+								<Box w="7rem" h="0.3rem" bg="#36a2eb" rounded={100}></Box>
 								<Text fontSize={'sm'}>Collateral Balance</Text>
 								<Text fontSize={'lg'} fontWeight="bold">
 									$ {totalCollateral.toFixed(2)}
 								</Text>
 
 								<Divider my={4} />
-								<Text w="7rem" h="0.3rem" bg="#ffcd56"></Text>
+								<Box w="5rem" h="0.3rem" bg="#ffcd56" rounded={100}></Box>
 								<Text fontSize={'sm'}>Borrow Balance</Text>
 								<Text fontSize={'lg'} fontWeight="bold">
 									$ {totalDebt.toFixed(2)}
 								</Text>
 
 								<Divider my={4} />
-								<Text w="7rem" h="0.3rem" bg="#ff6384"></Text>
+								<Box w="7rem" h="0.3rem" bg="#ff6384" rounded={100}></Box>
 								<Text fontSize={'sm'}>Available to Borrow</Text>
 								<Text fontSize={'lg'} fontWeight="bold">
 									${' '}
@@ -105,9 +105,9 @@ function App() {
 							width={{ sm: '100%', lg: '39.5%' }}
 							bg={colorMode == 'dark' ? '#171717' : '#FFFFFF'}
 							borderRadius={'10px'}>
-							<Text fontSize={'sm'}>Interest Rate</Text>
+							<Text fontSize={'sm'}>Stability Rate</Text>
 							<Text fontSize={'lg'} fontWeight="bold">
-								0.5%
+								1.01%
 							</Text>
 
 							<Divider my={4} />

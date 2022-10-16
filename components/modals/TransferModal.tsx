@@ -131,7 +131,7 @@ const TransferModal = ({ asset }: any) => {
 				<ModalOverlay />
 				<ModalContent width={'30rem'} height="30rem">
 					<ModalCloseButton />
-					<ModalHeader>Transfer Assets</ModalHeader>
+					<ModalHeader>Transfer {asset['symbol']}</ModalHeader>
 					<ModalBody>
 						<Select value={inputPoolIndex} onChange={inputPoolChange}>
 							{pools.map((pool: any, index) => {

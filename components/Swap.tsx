@@ -266,7 +266,7 @@ function Swap() {
 				</Text>
 				<Button
 					mt={6}
-					height="40px"
+					height="50px"
 					width={'100%'}
 					bgColor={'#0CAD4B'}
 					onClick={exchange}>
