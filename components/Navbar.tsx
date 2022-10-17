@@ -86,12 +86,7 @@ function NavBar() {
               <Button width={"3rem"} onClick={toggleColorMode} mr={5}> {colorMode == "dark" ? <BsMoonFill size={25} /> : <BsSunFill size={25} />}</Button>
             </ListItem>
             <ListItem mx="0rem">
-              <Box bg={address? "#171717":"green"} color="white" border={"1px solid #cfc8c8"} p="0.4rem" borderRadius={"5px"}>
-
-                <Text onClick={()=>{
-                  connect()
-                }}  fontFamily="Roboto" fontWeight={"bold"} fontSize="sm" textOverflow={"ellipsis"} whiteSpace="nowrap" overflow="hidden" width="6rem">{address? address:"Connect Wallet"}</Text>
-              </Box>
+            <ConnectButton/>
 
             </ListItem>
           </UnorderedList>
@@ -137,12 +132,7 @@ function NavBar() {
                   <Button variant={"outline"} width={"11rem"} onClick={toggleColorMode} > {colorMode == "dark" ? <BsMoonFill size={25} /> : <BsSunFill size={25} />} <Text ml="1rem">{colorMode == "light" ? "light" : "dark"} mode</Text></Button>
                 </ListItem>
                 <ListItem my="1rem">
-                  <Box h="2.5rem" bg={address? "#171717":"green"} border={"2px solid #cfc8c8"} p="0.4rem" borderRadius={"5px"} w="11rem">
-
-                    <Text  onClick={()=>{
-                  connect()
-                }}  fontFamily="Roboto" ml="2rem" mt="0.1rem" fontWeight={"bold"} fontSize="sm" textOverflow={"ellipsis"} whiteSpace="nowrap" overflow="hidden" width="8rem">{address? address:"Connect Wallet"}</Text>
-                  </Box>
+                  <ConnectButton/>
                 </ListItem>
               </UnorderedList>
             </nav>

@@ -38,72 +38,13 @@ import TransferModal from './modals/TransferModal';
 import { MdOpenInNew } from 'react-icons/md';
 import Link from 'next/link';
 
-
-import ReactPaginate from 'react-paginate';
-const itemsPerPage = 5;
-
-const ExchangeSideBar =() => {
+function ExchangeSideBar() {
 	const { colorMode } = useColorMode();
-	const [currentItems, setCurrentItems] = useState([]);
-	const [pageCount, setPageCount] = useState(0);
-	const [itemOffset, setItemOffset] = useState(0);
-
-
-	const {
-		synths,
-	} = useContext(WalletContext);
-	useEffect(() => {
-	  const endOffset = itemOffset + itemsPerPage;
-	  setCurrentItems(synths.slice(itemOffset, endOffset));
-	  setPageCount(Math.ceil(synths.length / itemsPerPage));
-	}, [itemOffset, itemsPerPage]);
-
-	const handlePageClick = (event) => {
-	  const newOffset = (event.selected * itemsPerPage) % synths.length;
-	  setItemOffset(newOffset);
-	};
-
-
-
-	return (
-	  <>
-	   <Flex justifyContent={"space-between"} mt="5rem"  bgColor={colorMode=="light"?"#f7f7f7" :'#171717'} flexDirection="column" height={"28rem"} >
-		<Items synths={currentItems}  />
-		
-		{synths.length >3 ? <ReactPaginate
-		  nextLabel=">"
-		  onPageChange={handlePageClick}
-		  pageRangeDisplayed={3}
-		  marginPagesDisplayed={2}
-		  pageCount={pageCount}
-		  previousLabel="<"
-		  pageClassName="page-item"
-		  pageLinkClassName="page-link"
-		  previousClassName="page-prev"
-		  previousLinkClassName="page-link"
-		  nextClassName="page-next"
-		  nextLinkClassName="page-link"
-		  breakLabel="..."
-		  breakClassName="page-item"
-		  breakLinkClassName="page-link"
-		  containerClassName="pagination"
-		  activeClassName="active"
-		  renderOnZeroPageCount={null}
-		/>:""}
-		</Flex>
-	  </>
-	);
-  }
-
-
-
-function Items({synths}:any) {
-	const { colorMode } = useColorMode();
-
 	const {
 		isConnected,
 		isConnecting,
 		address,
+		synths,
 		connect,
 		totalDebt,
 		isDataReady,

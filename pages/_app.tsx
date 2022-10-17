@@ -42,6 +42,7 @@ const breakpoints ={
   sm: "360px",
   md: "768px",
   lg: "1024px",
+  lg1:"1200px",
   xl: "1440px",
   "2xl": "1680px"
 };
@@ -52,7 +53,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <ChakraProvider theme={theme}>
     <WalletContextProvider>  
         <Flex justify={"center"} m="auto"  maxWidth={"1300px"} flexDirection={{sm:"column",md:"row"}}>
-        <Box minW={"100%"}>
+        <Box minW={{sm:"100%",lg1:"1200px"}}>
         <Navbar />
         <Component {...pageProps} />
         </Box>

@@ -67,7 +67,7 @@ function Exchange() {
 						<Box width={{sm:"100%",md:'35%'}}  >
 							<ExchangeSideBar />
 						</Box>
-						<Box mt={10}width={{sm:"100%",md:'60%'}} height={"100%"}>
+						<Box mt={10}width={{sm:"100%",md:'50%'}} height={"100%"}>
 							<Swap />
 						</Box>
 					</Flex>

@@ -175,12 +175,12 @@ function Swap() {
 				px={10}
 				pt={10}
 				
-				pb={'35px'}
+				pb={'180px'}
 				mt={6}
 				border={colorMode=="light"? "2px solid #ebe1e1":"2px solid #3c3a3a"}  
 				rounded={6}>
 				<Flex justify={'space-between'} mb={5}>
-					<Text mb={3} fontSize="4xl" fontWeight={'bold'}>
+					<Text mb={3} fontSize="3xl" fontWeight={'bold'}>
 						Trade
 					</Text>
 					<Box>

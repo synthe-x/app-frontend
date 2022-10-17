@@ -40,7 +40,7 @@ const ConnectButton = ({}) => {
 		<Box>
 			{isConnected ? (
 				<Box>
-					<Button>{address}</Button>
+					<Button> <Text w="8rem" whiteSpace={"nowrap"} textOverflow="ellipsis" overflow={"hidden"}> {address}</Text> </Button>
 				</Box>
 			) : (
 				<Button
