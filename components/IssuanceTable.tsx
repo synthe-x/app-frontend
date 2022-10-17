@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect,useState} from 'react';
 import {
 	Table,
 	Thead,
@@ -13,19 +13,69 @@ import {
 	Flex,
 	useDisclosure,useColorMode
 } from '@chakra-ui/react';
-
 import Image from 'next/image';
 import IssueModel from './modals/IssueModal';
 import RepayModel from './modals/RepayModal';
-
-const IssuanceTable = ({ debts, minCRatio, collateralBalance, cRatio }: any) => {
+import ReactPaginate from 'react-paginate';
+const itemsPerPage = 5;
+const IssuanceTable =({ debts, minCRatio, collateralBalance, cRatio }: any) => {
 	const { colorMode } = useColorMode();
-	const tknholdingImg = {
-		width: '30px',
-		marginLeft: '1rem',
-		marginRight: '0.5rem',
-		borderRadius: '100px',
+	const [currentItems, setCurrentItems] = useState([]);
+	const [pageCount, setPageCount] = useState(0);
+	const [itemOffset, setItemOffset] = useState(0);
+	useEffect(() => {
+	  const endOffset = itemOffset + itemsPerPage;
+	  setCurrentItems(debts.slice(itemOffset, endOffset));
+	  setPageCount(Math.ceil(debts.length / itemsPerPage));
+	}, [itemOffset, itemsPerPage]);
+
+	const handlePageClick = (event) => {
+	  const newOffset = (event.selected * itemsPerPage) % debts.length;
+	  setItemOffset(newOffset);
 	};
+	return (
+	  <>
+	  <Flex justifyContent={"space-between"} flexDirection="column" height={"38rem"}>
+		<Items debts={currentItems} minCRatio={minCRatio} collateralBalance={collateralBalance} cRatio={cRatio} />
+		{debts.length >3 ?<ReactPaginate
+		  nextLabel=">"
+		  onPageChange={handlePageClick}
+		  pageRangeDisplayed={3}
+		  marginPagesDisplayed={2}
+		  pageCount={pageCount}
+		  previousLabel="<"
+		  pageClassName="page-item"
+		  pageLinkClassName="page-link"
+		  previousClassName="page-prev"
+		  previousLinkClassName="page-link"
+		  nextClassName="page-next"
+		  nextLinkClassName="page-link"
+		  breakLabel="..."
+		  breakClassName="page-item"
+		  breakLinkClassName="page-link"
+		  containerClassName="pagination"
+		  activeClassName="active"
+		  renderOnZeroPageCount={null}
+		/>:""}
+	  </Flex>
+		
+	  </>
+	);
+  }
+
+
+
+const Items = ({ debts, minCRatio, collateralBalance, cRatio }: any) => {
+	const { colorMode } = useColorMode();
+	
+	
+	
+	// const tknholdingImg = {
+	// 	width: '30px',
+	// 	marginLeft: '1rem',
+	// 	marginRight: '0.5rem',
+	// 	borderRadius: '100px',
+	// };
 
 	return (
 		<>

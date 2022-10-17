@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useEffect,useState} from 'react'
 import {
   Table,
   Thead,
@@ -17,10 +17,58 @@ import WithdrawModal from './modals/WithdrawModal';
 import { FiMinusCircle } from 'react-icons/fi';
 import Image from 'next/image';
 import { getContract } from '../src/utils';
-import {useState} from 'react';
+import ReactPaginate from 'react-paginate';
+const itemsPerPage = 5;
 
 
 const CollateralTable = ({collaterals, cRatio}: any) => {
+	const { colorMode } = useColorMode();
+	const [currentItems, setCurrentItems] = useState([]);
+	const [pageCount, setPageCount] = useState(0);
+	const [itemOffset, setItemOffset] = useState(0);
+	useEffect(() => {
+	  const endOffset = itemOffset + itemsPerPage;
+	  setCurrentItems(collaterals.slice(itemOffset, endOffset));
+	  setPageCount(Math.ceil(collaterals.length / itemsPerPage));
+	}, [itemOffset, itemsPerPage]);
+
+	const handlePageClick = (event) => {
+	  const newOffset = (event.selected * itemsPerPage) % collaterals.length;
+	  setItemOffset(newOffset);
+	};
+	return (
+	  <>
+     <Flex justifyContent={"space-between"} flexDirection="column" height={"38rem"}>
+		<Items collaterals={currentItems}  cRatio={cRatio} />
+    {collaterals.length >3 ?<ReactPaginate
+		  nextLabel=">"
+		  onPageChange={handlePageClick}
+		  pageRangeDisplayed={3}
+		  marginPagesDisplayed={2}
+		  pageCount={pageCount}
+		  previousLabel="<"
+		  pageClassName="page-item"
+		  pageLinkClassName="page-link"
+		  previousClassName="page-prev"
+		  previousLinkClassName="page-link"
+		  nextClassName="page-next"
+		  nextLinkClassName="page-link"
+		  breakLabel="..."
+		  breakClassName="page-item"
+		  breakLinkClassName="page-link"
+		  containerClassName="pagination"
+		  activeClassName="active"
+		  renderOnZeroPageCount={null}
+		/>:""}
+    </Flex>
+	  </>
+	);
+  }
+
+
+
+
+const Items = ({collaterals, cRatio}: any) => {
   const { colorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [claimLoading, setClaimLoading] = useState(false);

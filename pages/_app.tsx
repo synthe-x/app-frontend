@@ -50,9 +50,9 @@ const theme = extendTheme({ components, styles, config,breakpoints })
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider theme={theme}>
-    <WalletContextProvider>
-        <Flex justify={"center"} flexDirection={{sm:"column",md:"row"}}>
-        <Box maxWidth={"1300px"} minW={"1200px"}>
+    <WalletContextProvider>  
+        <Flex justify={"center"} m="auto"  maxWidth={"1300px"} flexDirection={{sm:"column",md:"row"}}>
+        <Box minW={"100%"}>
         <Navbar />
         <Component {...pageProps} />
         </Box>

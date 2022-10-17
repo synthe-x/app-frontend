@@ -11,27 +11,40 @@ import {
 import ConnectButton from "./ConnectButton"
 import { FaBars } from 'react-icons/fa';
 import { BsMoonFill, BsSunFill } from 'react-icons/bs';
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import Image from 'next/image';
 import { useRouter } from "next/router";
 import Link from "next/link";
 import '../styles/Home.module.css'
 import darklogo from '../public/dark_logo.svg'
 import lightlogo from '../public/light_logo.svg'
-
+import { WalletContext } from '../components/WalletContextProvider';
 
 function NavBar() {
-  const [ address, setAddress ] = useState(null);
+  // const [ address, setAddress ] = useState(null);
   const router = useRouter();
   const { toggleColorMode } = useColorMode();
   const { colorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const {
+    isConnected,
+    isConnecting,
+    address,
+    connect,
+    collaterals,
+    synths,
+    totalCollateral,
+    totalDebt,
+    isDataReady,
+    connectionError
+  } = useContext(WalletContext);
+
 
   return (
     <>
       <Flex justify={"space-between"} alignItems={"center"}>
         <Box mb={3}>
-          <Image onClick={()=>{
+          <Image onClick={() => {
             router.push("/")
           }} src={colorMode == "dark" ? darklogo : lightlogo} alt="" width="100px" height="70px" />
         </Box>
@@ -42,22 +55,22 @@ function NavBar() {
 
             <ListItem mx="1rem">
               <Link href="/">
-                <Text my="1rem" 
-                color={router.pathname == "/" ? "green" : ""} 
-                textDecoration={router.pathname == "/" ? "underline": ""} 
-                textUnderlineOffset={5} 
-                cursor={"pointer"} onClick={onClose} fontFamily="Roboto" fontWeight={"bold"} fontSize="sm">
+                <Text my="1rem"
+                  color={router.pathname == "/" ? "green" : ""}
+                  textDecoration={router.pathname == "/" ? "underline" : ""}
+                  textUnderlineOffset={5}
+                  cursor={"pointer"} onClick={onClose} fontFamily="Roboto" fontWeight={"bold"} fontSize="sm">
                   App
                 </Text>
               </Link>
             </ListItem>
             <ListItem mx="1rem">
               <Link href={"/exchange"}  >
-                <Text cursor={"pointer"} 
-                color={router.pathname == "/exchange" ? "green" : ""} 
-                textDecoration={router.pathname == "/exchange" ? "underline": ""} 
-                textUnderlineOffset={5} 
-                my="1rem" onClick={onClose} fontFamily="Roboto" fontWeight={"bold"} fontSize="sm">
+                <Text cursor={"pointer"}
+                  color={router.pathname == "/exchange" ? "green" : ""}
+                  textDecoration={router.pathname == "/exchange" ? "underline" : ""}
+                  textUnderlineOffset={5}
+                  my="1rem" onClick={onClose} fontFamily="Roboto" fontWeight={"bold"} fontSize="sm">
                   Exchange
                 </Text>
               </Link>
@@ -73,7 +86,13 @@ function NavBar() {
               <Button width={"3rem"} onClick={toggleColorMode} mr={5}> {colorMode == "dark" ? <BsMoonFill size={25} /> : <BsSunFill size={25} />}</Button>
             </ListItem>
             <ListItem mx="0rem">
-              <ConnectButton />
+              <Box bg={address? "#171717":"green"} color="white" border={"1px solid #cfc8c8"} p="0.4rem" borderRadius={"5px"}>
+
+                <Text onClick={()=>{
+                  connect()
+                }}  fontFamily="Roboto" fontWeight={"bold"} fontSize="sm" textOverflow={"ellipsis"} whiteSpace="nowrap" overflow="hidden" width="6rem">{address? address:"Connect Wallet"}</Text>
+              </Box>
+
             </ListItem>
           </UnorderedList>
         </Box>
@@ -109,7 +128,7 @@ function NavBar() {
                 </ListItem>
                 <ListItem>
                   <Link href="/portfolio"   >
-                    <Text cursor={"pointer"} onClick={onClose} my="1rem" fontFamily="Roboto" fontSize={"2xl"} fontWeight={"bold"}>
+                    <Text cursor={"pointer"} onClick={onClose} mb="0.5rem" fontFamily="Roboto" fontSize={"2xl"} fontWeight={"bold"}>
                       Portfolio
                     </Text>
                   </Link>
@@ -118,7 +137,12 @@ function NavBar() {
                   <Button variant={"outline"} width={"11rem"} onClick={toggleColorMode} > {colorMode == "dark" ? <BsMoonFill size={25} /> : <BsSunFill size={25} />} <Text ml="1rem">{colorMode == "light" ? "light" : "dark"} mode</Text></Button>
                 </ListItem>
                 <ListItem my="1rem">
-                  <ConnectButton/>
+                  <Box h="2.5rem" bg={address? "#171717":"green"} border={"2px solid #cfc8c8"} p="0.4rem" borderRadius={"5px"} w="11rem">
+
+                    <Text  onClick={()=>{
+                  connect()
+                }}  fontFamily="Roboto" ml="2rem" mt="0.1rem" fontWeight={"bold"} fontSize="sm" textOverflow={"ellipsis"} whiteSpace="nowrap" overflow="hidden" width="8rem">{address? address:"Connect Wallet"}</Text>
+                  </Box>
                 </ListItem>
               </UnorderedList>
             </nav>

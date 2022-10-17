@@ -63,11 +63,11 @@ function Exchange() {
 		<>
 			{connectionError.length == 0? isConnected ? (
 				isDataReady ? (
-					<Flex justifyContent={"space-between"}>
-						<Box width={'30%'}>
+					<Flex justifyContent={"space-between"} flexDirection={{sm:"column",md:"row"}}>
+						<Box width={{sm:"100%",md:'35%'}}  >
 							<ExchangeSideBar />
 						</Box>
-						<Box mt={10} width='50%' mr={"100px"}>
+						<Box mt={10}width={{sm:"100%",md:'60%'}} height={"100%"}>
 							<Swap />
 						</Box>
 					</Flex>

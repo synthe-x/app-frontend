@@ -171,15 +171,16 @@ function Swap() {
 	return (
 		<>
 			<Box
-				bgColor={'#171717'}
+				bgColor={colorMode=="light"?"#FFFFFF" :'#171717'}
 				px={10}
 				pt={10}
-				pb={'150px'}
+				
+				pb={'35px'}
 				mt={6}
-				border={'1px solid #2C2C2C'}
+				border={colorMode=="light"? "2px solid #ebe1e1":"2px solid #3c3a3a"}  
 				rounded={6}>
 				<Flex justify={'space-between'} mb={5}>
-					<Text mb={3} fontSize="3xl" fontWeight={'bold'}>
+					<Text mb={3} fontSize="4xl" fontWeight={'bold'}>
 						Trade
 					</Text>
 					<Box>

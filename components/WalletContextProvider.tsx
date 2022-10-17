@@ -24,7 +24,7 @@ interface WalletValue {
 }
 
 function WalletContextProvider({children}: any) {
-    const [address, setAddress] = React.useState(null);
+    const [address, setAddress] = React.useState<string|null>(null);
     const [tronWeb, setTronWeb] = React.useState({});
     const [isConnected, setIsConnected] = React.useState(false);
     const [isConnecting, setIsConnecting] = React.useState(false);
@@ -45,7 +45,13 @@ function WalletContextProvider({children}: any) {
             setTronWeb((window as any).tronWeb);
             setIsConnecting(true);
             (window as any).tronWeb.trx.getAccount((window as any).tronWeb.defaultAddress.base58).then((account: any) => {
-                setAddress((window as any).tronWeb.address.fromHex(account.address))
+                let _addr = ''
+				if(!account.address){
+					_addr = (window as any).tronWeb.address.fromHex(account.__payload__.address);
+				} else { 
+					_addr = (window as any).tronWeb.address.fromHex(account.address)
+				}
+				setAddress(_addr)
                 setIsConnected(true);
                 setIsConnecting(false);
 				if((window as any).tronWeb.fullNode.host != 'https://api.nileex.io'){
@@ -53,7 +59,7 @@ function WalletContextProvider({children}: any) {
 				} else {
 					setChain((window as any).tronWeb.fullNode.host)
 					// fetchData((window as any).tronWeb, (window as any).tronWeb.address.fromHex(account.address))
-					fetchDataLocal((window as any).tronWeb, (window as any).tronWeb.address.fromHex(account.address))
+					fetchDataLocal((window as any).tronWeb, _addr)
 				}
             })
         }

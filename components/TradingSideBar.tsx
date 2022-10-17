@@ -38,7 +38,66 @@ import TransferModal from './modals/TransferModal';
 import { MdOpenInNew } from 'react-icons/md';
 import Link from 'next/link';
 
-function ExchangeSideBar() {
+
+import ReactPaginate from 'react-paginate';
+const itemsPerPage = 5;
+
+const ExchangeSideBar =() => {
+	const { colorMode } = useColorMode();
+	const [currentItems, setCurrentItems] = useState([]);
+	const [pageCount, setPageCount] = useState(0);
+	const [itemOffset, setItemOffset] = useState(0);
+
+
+	const {
+		synths,
+	} = useContext(WalletContext);
+	useEffect(() => {
+	  const endOffset = itemOffset + itemsPerPage;
+	  setCurrentItems(synths.slice(itemOffset, endOffset));
+	  setPageCount(Math.ceil(synths.length / itemsPerPage));
+	}, [itemOffset, itemsPerPage]);
+
+	const handlePageClick = (event) => {
+	  const newOffset = (event.selected * itemsPerPage) % synths.length;
+	  setItemOffset(newOffset);
+	};
+
+
+
+	return (
+	  <>
+	   <Flex justifyContent={"space-between"} mt="5rem"  bgColor={colorMode=="light"?"#f7f7f7" :'#171717'} flexDirection="column" height={"28rem"} >
+		<Items synths={currentItems}  />
+		
+		{synths.length >3 ? <ReactPaginate
+		  nextLabel=">"
+		  onPageChange={handlePageClick}
+		  pageRangeDisplayed={3}
+		  marginPagesDisplayed={2}
+		  pageCount={pageCount}
+		  previousLabel="<"
+		  pageClassName="page-item"
+		  pageLinkClassName="page-link"
+		  previousClassName="page-prev"
+		  previousLinkClassName="page-link"
+		  nextClassName="page-next"
+		  nextLinkClassName="page-link"
+		  breakLabel="..."
+		  breakClassName="page-item"
+		  breakLinkClassName="page-link"
+		  containerClassName="pagination"
+		  activeClassName="active"
+		  renderOnZeroPageCount={null}
+		/>:""}
+		</Flex>
+	  </>
+	);
+  }
+
+
+
+function Items({synths}:any) {
 	const { colorMode } = useColorMode();
 
 	const {
@@ -46,7 +105,6 @@ function ExchangeSideBar() {
 		isConnecting,
 		address,
 		connect,
-		synths,
 		totalDebt,
 		isDataReady,
 		tradingPool,
@@ -61,36 +119,38 @@ function ExchangeSideBar() {
 
 	return (
 		<>
-			<Box>
+			<Box  px="0.3rem">
                 <Text mt={10} mb={2} fontSize={"xs"} fontWeight="bold" color={"#626262"} ml={1}>CHOOSE A POOL</Text>
 				<Select
-					mb={10}
+					mb={5} 
 					onChange={updatePoolIndex}
 					value={tradingPool}
-					bgColor={'#171717'}
-					// height="100"
+					bgColor={colorMode=="light"?"#FFFFFF" :'#171717'}
+					height="50"
+					border={"2px solid #FFFFFF"}
                     >
 					{pools.map((pool: any, index: number) => {
 						return (
-							<option key={pool['symbol']} value={index}>
+							<option key={pool['symbol']} value={index} >
 								<Text>{pool['name']}</Text>
 							</option>
 						);
 					})}
 				</Select>
-				<TableContainer border={"1px solid #2C2C2C"} rounded={6} py={2} bgColor="#171717">
-					<Table variant="simple" size="sm">
-						<Thead>
-							<Tr>
-								<Th>Asset</Th>
-								<Th>Balance</Th>
+				 {/* bgColor="#171717" */}
+				<TableContainer rounded={6} >
+					<Table  variant="simple" size="sm"  bgColor={colorMode=="light"?"#FFFFFF" :'#171717'}>
+						<Thead > 
+							<Tr height={"3rem"} bg={ colorMode=="light"?"#FFFFFF":'#171717'}>
+								<Th fontWeight={"bold"} fontSize="sm">Asset</Th>
+								<Th fontWeight={"bold"} fontSize="sm">Balance</Th>
 								<Th></Th>
 							</Tr>
 						</Thead>
 						<Tbody>
 							{synths.map((_synth: any, index: number) => {
 								return (
-									<Tr key={index}>
+									<Tr key={index} >
 										<Td>
 											{_synth.name
 												.split(' ')
